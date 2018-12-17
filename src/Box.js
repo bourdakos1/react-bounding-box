@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import { BOX } from './Canvas'
+
 import styles from './Box.module.css'
 
 export default class Rect extends Component {
@@ -15,9 +17,13 @@ export default class Rect extends Component {
       height: Math.abs(Math.round((y2 - y) * imageHeight))
     }
 
+    document.documentElement.style.setProperty('--color', this.props.color)
+
     return (
       <div className={styles.wrapper} style={dimensions}>
-        <div className={styles.box} />
+        <div
+          className={this.props.mode === BOX ? styles.draw : styles.move}
+        />
       </div>
     )
   }

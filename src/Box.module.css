@@ -1,9 +1,33 @@
+:root {
+  --color: white;
+}
+
 .wrapper {
   position: absolute;
   user-select: none;
 }
 
-.box {
+.draw {
+  position: absolute;
+  border: 1px solid var(--color);
+  left: 1px;
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
+}
+
+.draw::before {
+  content: '';
+  position: absolute;
+  background-color: var(--color);
+  opacity: 0.1;
+  left: 2px;
+  top: 2px;
+  right: 2px;
+  bottom: 2px;
+}
+
+.move {
   position: absolute;
   border: 1px solid white;
   left: 0px;

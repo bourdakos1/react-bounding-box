@@ -135,6 +135,7 @@ export default class App extends Component {
     if (!dragging) {
       return
     }
+
     onCoordinatesChanged(
       {
         x: Math.min(x, x2),
@@ -182,19 +183,38 @@ export default class App extends Component {
           {this.props.bboxes.map((bbox, i) => (
             <div>
               <Box key={i} index={i} bbox={bbox} imageSize={this.state.size} />
-              <Nobs key={i} index={i} bbox={bbox} imageSize={this.state.size} />
+              {this.props.mode === MOVE && (
+                <Nobs
+                  key={i}
+                  index={i}
+                  bbox={bbox}
+                  imageSize={this.state.size}
+                />
+              )}
             </div>
           ))}
         </div>
-        {this.props.bboxes.map((bbox, i) => (
-          <TouchTargets
-            key={i}
-            index={i}
-            bbox={bbox}
-            onCornerGrabbed={this.handleMouseDown}
-            imageSize={this.state.size}
-          />
-        ))}
+        {this.props.mode === BOX &&
+          this.props.bboxes.map((bbox, i) => (
+            <Box
+              key={i}
+              index={i}
+              bbox={bbox}
+              color="#00b9ff"
+              mode={BOX}
+              imageSize={this.state.size}
+            />
+          ))}
+        {this.props.mode === MOVE &&
+          this.props.bboxes.map((bbox, i) => (
+            <TouchTargets
+              key={i}
+              index={i}
+              bbox={bbox}
+              onCornerGrabbed={this.handleMouseDown}
+              imageSize={this.state.size}
+            />
+          ))}
       </div>
     )
   }
