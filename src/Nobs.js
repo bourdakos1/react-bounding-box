@@ -19,7 +19,10 @@ export default class Rect extends Component {
 
     return (
       <div className="Rect" style={dimensions}>
-        <div className="rect" />
+        <div className="front-nob-base front-nob" />
+        <div className="front-nob-base front-nob2" />
+        <div className="front-nob-base front-nob3" />
+        <div className="front-nob-base front-nob4" />
       </div>
     )
   }

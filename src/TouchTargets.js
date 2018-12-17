@@ -19,7 +19,26 @@ export default class Rect extends Component {
 
     return (
       <div className="Rect" style={dimensions}>
-        <div className="rect" />
+        <div
+          id="00"
+          onMouseDown={this.handleMouseDown}
+          className="back-nob-base back-nob"
+        />
+        <div
+          id="10"
+          onMouseDown={this.handleMouseDown}
+          className="back-nob-base back-nob2"
+        />
+        <div
+          id="11"
+          onMouseDown={this.handleMouseDown}
+          className="back-nob-base back-nob3"
+        />
+        <div
+          id="01"
+          onMouseDown={this.handleMouseDown}
+          className="back-nob-base back-nob4"
+        />
       </div>
     )
   }

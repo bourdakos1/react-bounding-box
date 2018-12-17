@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import Drawer from "./Drawer";
+import Canvas from "./Canvas";
 
 import "./styles.css";
 
@@ -37,7 +37,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Drawer
+        <Canvas
           bboxes={this.state.bboxes}
           image={this.state.image}
           onCoordinatesChanged={this.handleCoordinatesChanged}
