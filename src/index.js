@@ -62,7 +62,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ display: 'flex' }}>
         <Canvas
           mode={this.state.mode}
           bboxes={this.state.bboxes}
@@ -70,51 +70,53 @@ class App extends Component {
           onDrawStarted={this.handleDrawStarted}
           onCoordinatesChanged={this.handleCoordinatesChanged}
         />
-        <div>{`Mode: ${this.state.mode}`}</div>
-        <button value={MOVE} onClick={this.handleModeChanged}>
-          Move
-        </button>
-        <button value={BOX} onClick={this.handleModeChanged}>
-          Draw
-        </button>
-        <div>{`Label: ${this.state.label}`}</div>
-        {this.state.labels.map(label => (
-          <button value={label} onClick={this.handleLabelChanged}>
-            {label}
+        <div>
+          <div>{`Mode: ${this.state.mode}`}</div>
+          <button value={MOVE} onClick={this.handleModeChanged}>
+            Move
           </button>
-        ))}
-        {this.state.bboxes
-          .sort((a, b) => a.label.toLowerCase() < b.label.toLowerCase())
-          .map(box => {
-            const imageHeight = 700
-            const imageWidth = 1120
+          <button value={BOX} onClick={this.handleModeChanged}>
+            Draw
+          </button>
+          <div>{`Label: ${this.state.label}`}</div>
+          {this.state.labels.map(label => (
+            <button value={label} onClick={this.handleLabelChanged}>
+              {label}
+            </button>
+          ))}
+          {this.state.bboxes
+            .sort((a, b) => a.label.toLowerCase() < b.label.toLowerCase())
+            .map(box => {
+              const imageHeight = 700
+              const imageWidth = 1120
 
-            const cropHeight = 20
-            const cropWidth = 30
+              const cropHeight = 20
+              const cropWidth = 30
 
-            const scale = cropWidth / ((box.x2 - box.x) * imageWidth)
-            const objHeight = scale * (box.y2 - box.y) * imageHeight
-            const centerOffset = (cropHeight - objHeight) / 2
-            const xOffset = -box.x * scale * imageWidth
-            const yOffset = -box.y * scale * imageHeight
-            const backgroundSize = scale * (100 / cropWidth) * imageWidth
+              const scale = cropWidth / ((box.x2 - box.x) * imageWidth)
+              const objHeight = scale * (box.y2 - box.y) * imageHeight
+              const centerOffset = (cropHeight - objHeight) / 2
+              const xOffset = -box.x * scale * imageWidth
+              const yOffset = -box.y * scale * imageHeight
+              const backgroundSize = scale * (100 / cropWidth) * imageWidth
 
-            return (
-              <div>
-                <div
-                  style={{
-                    backgroundImage: `url(${this.state.image})`,
-                    height: `${cropHeight}px`,
-                    width: `${cropWidth}px`,
-                    backgroundPosition: `${xOffset}px ${yOffset +
-                      centerOffset}px`,
-                    backgroundSize: `${backgroundSize}%`
-                  }}
-                />
-                <div>{box.label}</div>
-              </div>
-            )
-          })}
+              return (
+                <div>
+                  <div
+                    style={{
+                      backgroundImage: `url(${this.state.image})`,
+                      height: `${cropHeight}px`,
+                      width: `${cropWidth}px`,
+                      backgroundPosition: `${xOffset}px ${yOffset +
+                        centerOffset}px`,
+                      backgroundSize: `${backgroundSize}%`
+                    }}
+                  />
+                  <div>{box.label}</div>
+                </div>
+              )
+            })}
+        </div>
       </div>
     )
   }
