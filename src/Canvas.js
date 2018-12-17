@@ -5,6 +5,9 @@ import TouchTargets from './TouchTargets'
 
 import styles from './Canvas.module.css'
 
+export const MOVE = 'move'
+export const BOX = 'box'
+
 export default class App extends Component {
   state = {
     size: { imageWidth: 0, imageHeight: 0 },
@@ -25,27 +28,57 @@ export default class App extends Component {
     document.removeEventListener('mousemove', this.handleMouseMove)
   }
 
-  handleMouseDown = (e, index) => {
+  handleCanvasDragStart = e => {
+    const { mode, onDrawStarted } = this.props
+    const { size } = this.state
+    const { imageWidth, imageHeight } = size
     // Start drag if it was a left click.
-    if (e.button === 0) {
-      const id = e.target.id
-      const move = [0, 0]
-      if (id.startsWith('0')) {
-        move[0] = 0
-      } else {
-        move[0] = 1
-      }
-      if (id.endsWith('0')) {
-        move[1] = 0
-      } else {
-        move[1] = 1
-      }
-      this.setState({
-        dragging: true,
-        move: move,
-        box: index
-      })
+    if (e.button !== 0 || mode !== BOX) {
+      return
     }
+
+    const rect = this.cavasRef.getBoundingClientRect()
+    const mX = (e.clientX - rect.left) / imageWidth
+    const mY = (e.clientY - rect.top) / imageHeight
+
+    onDrawStarted({
+      x: Math.min(1, Math.max(0, mX)),
+      y: Math.min(1, Math.max(0, mY)),
+      x2: Math.min(1, Math.max(0, mX)),
+      y2: Math.min(1, Math.max(0, mY))
+    })
+
+    this.setState({
+      dragging: true,
+      move: [1, 1],
+      box: 0
+    })
+  }
+
+  handleMouseDown = (e, index) => {
+    const { mode } = this.props
+    // Start drag if it was a left click.
+    if (e.button !== 0 || mode !== MOVE) {
+      return
+    }
+
+    const id = e.target.id
+    const move = [0, 0]
+    if (id.startsWith('0')) {
+      move[0] = 0
+    } else {
+      move[0] = 1
+    }
+    if (id.endsWith('0')) {
+      move[1] = 0
+    } else {
+      move[1] = 1
+    }
+    this.setState({
+      dragging: true,
+      move: move,
+      box: index
+    })
   }
 
   handleMouseMove = e => {
@@ -131,7 +164,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className={styles.wrapper}>
+      <div onMouseDown={this.handleCanvasDragStart} className={styles.wrapper}>
         <img
           className={styles.image}
           alt="cats"
@@ -148,18 +181,8 @@ export default class App extends Component {
         <div className={styles.blendMode}>
           {this.props.bboxes.map((bbox, i) => (
             <div>
-              <Box
-                key={i}
-                index={i}
-                bbox={bbox}
-                imageSize={this.state.size}
-              />
-              <Nobs
-                key={i}
-                index={i}
-                bbox={bbox}
-                imageSize={this.state.size}
-              />
+              <Box key={i} index={i} bbox={bbox} imageSize={this.state.size} />
+              <Nobs key={i} index={i} bbox={bbox} imageSize={this.state.size} />
             </div>
           ))}
         </div>
