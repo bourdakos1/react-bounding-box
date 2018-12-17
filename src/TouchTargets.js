@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import styles from './TouchTargets.module.css'
+
 export default class Rect extends Component {
   handleMouseDown = e => {
     this.props.onCornerGrabbed(e, this.props.index)
@@ -18,26 +20,26 @@ export default class Rect extends Component {
     }
 
     return (
-      <div className="Rect" style={dimensions}>
+      <div className={styles.wrapper} style={dimensions}>
         <div
           id="00"
           onMouseDown={this.handleMouseDown}
-          className="back-nob-base back-nob"
+          className={styles.topLeft}
         />
         <div
           id="10"
           onMouseDown={this.handleMouseDown}
-          className="back-nob-base back-nob2"
+          className={styles.topRight}
         />
         <div
           id="11"
           onMouseDown={this.handleMouseDown}
-          className="back-nob-base back-nob3"
+          className={styles.bottomRight}
         />
         <div
           id="01"
           onMouseDown={this.handleMouseDown}
-          className="back-nob-base back-nob4"
+          className={styles.bottomLeft}
         />
       </div>
     )

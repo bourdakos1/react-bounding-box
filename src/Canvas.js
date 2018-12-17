@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import Rect from './Rect'
+import Box from './Box'
 import Nobs from './Nobs'
 import TouchTargets from './TouchTargets'
 
-import './styles.css'
+import styles from './Canvas.module.css'
 
 export default class App extends Component {
   state = {
@@ -131,8 +131,9 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="Canvas">
+      <div className={styles.wrapper}>
         <img
+          className={styles.image}
           alt="cats"
           draggable={false}
           src={this.props.image}
@@ -144,21 +145,19 @@ export default class App extends Component {
             e.preventDefault()
           }}
         />
-        <div className="front-wrap">
+        <div className={styles.blendMode}>
           {this.props.bboxes.map((bbox, i) => (
             <div>
-              <Rect
+              <Box
                 key={i}
                 index={i}
                 bbox={bbox}
-                onCornerGrabbed={this.handleMouseDown}
                 imageSize={this.state.size}
               />
               <Nobs
                 key={i}
                 index={i}
                 bbox={bbox}
-                onCornerGrabbed={this.handleMouseDown}
                 imageSize={this.state.size}
               />
             </div>

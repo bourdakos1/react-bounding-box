@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 
-export default class Rect extends Component {
-  handleMouseDown = e => {
-    this.props.onCornerGrabbed(e, this.props.index)
-  }
+import styles from './Nobs.module.css'
 
+export default class Rect extends Component {
   render() {
     const { bbox, imageSize } = this.props
     const { x, y, x2, y2 } = bbox
@@ -18,11 +16,11 @@ export default class Rect extends Component {
     }
 
     return (
-      <div className="Rect" style={dimensions}>
-        <div className="front-nob-base front-nob" />
-        <div className="front-nob-base front-nob2" />
-        <div className="front-nob-base front-nob3" />
-        <div className="front-nob-base front-nob4" />
+      <div className={styles.wrapper} style={dimensions}>
+        <div className={styles.topLeft} />
+        <div className={styles.topRight} />
+        <div className={styles.bottomRight} />
+        <div className={styles.bottomLeft} />
       </div>
     )
   }
