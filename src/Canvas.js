@@ -31,11 +31,13 @@ export default class App extends Component {
   handleCanvasDragStart = e => {
     const { mode, onDrawStarted } = this.props
     const { size } = this.state
-    const { imageWidth, imageHeight } = size
+
     // Start drag if it was a left click.
     if (e.button !== 0 || mode !== BOX) {
       return
     }
+
+    const { imageWidth, imageHeight } = size
 
     const rect = this.cavasRef.getBoundingClientRect()
     const mX = (e.clientX - rect.left) / imageWidth
@@ -57,6 +59,7 @@ export default class App extends Component {
 
   handleMouseDown = (e, index) => {
     const { mode } = this.props
+
     // Start drag if it was a left click.
     if (e.button !== 0 || mode !== MOVE) {
       return
@@ -84,12 +87,13 @@ export default class App extends Component {
   handleMouseMove = e => {
     const { onCoordinatesChanged, bboxes } = this.props
     const { dragging, move, box, size } = this.state
-    const { x, y, x2, y2 } = bboxes[box]
-    const { imageWidth, imageHeight } = size
 
     if (!dragging) {
       return
     }
+
+    const { x, y, x2, y2, ...rest } = bboxes[box]
+    const { imageWidth, imageHeight } = size
 
     const rect = this.cavasRef.getBoundingClientRect()
     const mX = (e.clientX - rect.left) / imageWidth
@@ -121,7 +125,8 @@ export default class App extends Component {
         x: Math.min(1, Math.max(0, newX)),
         y: Math.min(1, Math.max(0, newY)),
         x2: Math.min(1, Math.max(0, newX2)),
-        y2: Math.min(1, Math.max(0, newY2))
+        y2: Math.min(1, Math.max(0, newY2)),
+        ...rest
       },
       box
     )
@@ -130,18 +135,20 @@ export default class App extends Component {
   handleDragEnd = e => {
     const { onCoordinatesChanged, bboxes } = this.props
     const { dragging, box } = this.state
-    const { x, y, x2, y2 } = bboxes[box]
 
     if (!dragging) {
       return
     }
+
+    const { x, y, x2, y2, ...rest } = bboxes[box]
 
     onCoordinatesChanged(
       {
         x: Math.min(x, x2),
         y: Math.min(y, y2),
         x2: Math.max(x, x2),
-        y2: Math.max(y, y2)
+        y2: Math.max(y, y2),
+        ...rest
       },
       box
     )
@@ -200,7 +207,6 @@ export default class App extends Component {
               key={i}
               index={i}
               bbox={bbox}
-              color="#00b9ff"
               mode={BOX}
               imageSize={this.state.size}
             />

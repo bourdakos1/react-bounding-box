@@ -4,7 +4,8 @@ import styles from './TouchTargets.module.css'
 
 export default class Rect extends Component {
   handleMouseDown = e => {
-    this.props.onCornerGrabbed(e, this.props.index)
+    const { onCornerGrabbed, index } = this.props
+    onCornerGrabbed(e, index)
   }
 
   render() {
