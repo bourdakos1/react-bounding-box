@@ -1,0 +1,101 @@
+body {
+  margin: 20px;
+  padding: 0;
+}
+
+img {
+  user-select: none;
+  max-width: 80%;
+}
+
+.Rect {
+  position: absolute;
+  user-select: none;
+}
+
+.Canvas {
+  position: relative;
+}
+
+.front-wrap {
+  mix-blend-mode: difference;
+  /* position: absolute; */
+}
+
+.back-wrap {
+  /* position: absolute; */
+}
+
+.back-nob-base {
+  position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  width: 7px;
+  height: 7px;
+  z-index: 10;
+}
+
+.back-nob-base::before {
+  content: "";
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.06);
+  left: 1px;
+  top: 1px;
+  width: 5px;
+  height: 5px;
+}
+
+.back-nob {
+  top: -4px;
+  left: -4px;
+}
+
+.back-nob2 {
+  top: -4px;
+  right: -4px;
+}
+
+.back-nob3 {
+  bottom: -4px;
+  right: -4px;
+}
+
+.back-nob4 {
+  bottom: -4px;
+  left: -4px;
+}
+
+.front-nob-base {
+  position: absolute;
+  border: 1px solid white;
+  width: 5px;
+  height: 5px;
+}
+
+.front-nob {
+  top: -3px;
+  left: -3px;
+}
+
+.front-nob2 {
+  top: -3px;
+  right: -3px;
+}
+
+.front-nob3 {
+  bottom: -3px;
+  right: -3px;
+}
+
+.front-nob4 {
+  bottom: -3px;
+  left: -3px;
+}
+
+.rect {
+  position: absolute;
+  border: 1px solid white;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+}
